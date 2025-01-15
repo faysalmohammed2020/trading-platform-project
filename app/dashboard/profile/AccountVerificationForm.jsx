@@ -21,9 +21,9 @@ import { useSession } from "next-auth/react";
 const AccountVerificationForm = () => {
   const [value, setValue] = useState("");
   const session = useSession();
-  const handleSubmit = () => {
-    console.log(value);
-  };
+  // const handleSubmit = () => {
+  //   console.log(value);
+  // };
   return (
     <div className="flex justify-center">
       <div className="space-y-5 mt-10 w-full">
@@ -32,7 +32,10 @@ const AccountVerificationForm = () => {
           <p>{session.data?.user?.email}</p>
           <Dialog>
             <DialogTrigger asChild>
-              <Button>Sent OTP</Button>
+              <Button 
+              onClick={async () => {
+                await fetch('/api/emails' ,{method: "POST"});
+              }}>Sent OTP</Button>
             </DialogTrigger>
             <DialogContent>
               <DialogHeader>
@@ -57,7 +60,7 @@ const AccountVerificationForm = () => {
                   </InputOTPGroup>
                 </InputOTP>
                 <DialogClose asChild>
-                  <Button onClick={handleSubmit} className={"w-[10rem]"}>
+                  <Button className={"w-[10rem]"}>
                     Submit
                   </Button>
                 </DialogClose>
